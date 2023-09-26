@@ -6,11 +6,19 @@ from dogs.models import Dog
 from dogs.serializers import DogSerializer
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
 def index(request):
     return HttpResponse("Hello, world")
+    
+class DogViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing dog instances.
+    """
+    serializer_class = DogSerializer
+    queryset = Dog.objects.all()
 
 class DogList(APIView):
     """

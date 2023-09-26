@@ -16,13 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
-from django.urls import path
+from django.urls import path, include
 from dogs import views
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'dogs', views.DogViewSet)
 
 urlpatterns = [
     path('dogs/', views.DogList.as_view()),
     path('dogs/<int:pk>/', views.DogDetail.as_view()),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
