@@ -28,11 +28,6 @@ class DogSerializer(serializers.Serializer):
         """
         Update and return an existing `Dog` instance, given the validated data.
         """
-        #instance.title = validated_data.get('title', instance.title)
-        #instance.code = validated_data.get('code', instance.code)
-        #instance.linenos = validated_data.get('linenos', instance.linenos)
-        #instance.language = validated_data.get('language', instance.language)
-        #instance.style = validated_data.get('style', instance.style)
         instance.name = validated_data.get('name', instance.name)
         instance.age = validated_data.get('age', instance.age)
         instance.breed = validated_data.get('breed', instance.breed)
@@ -43,3 +38,29 @@ class DogSerializer(serializers.Serializer):
         instance.save()
         return instance
         
+class BreedSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=30)
+    size = serializers.CharField(max_length=2)
+    friendliness = serializers.IntegerField()
+    trainability = serializers.IntegerField()
+    sheddingamount = serializers.IntegerField()
+    exerciseneeds = serializers.IntegerField()
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Breed` instance, given the validated data.
+        """
+        return Breed.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Breed` instance, given the validated data.
+        """
+        instance.name = validated_data.get('name', instance.name)
+        instance.size = validated_data.get('size', instance.size)
+        instance.friendliness = validated_data.get('friendliness', instance.friendliness)
+        instance.trainability = validated_data.get('trainability', instance.trainability)
+        instance.sheddingamount = validated_data.get('sheddingamount', instance.sheddingamount)
+        instance.exerciseneeds = validated_data.get('exerciseneeds', instance.exerciseneeds)
+        instance.save()
+        return instance
